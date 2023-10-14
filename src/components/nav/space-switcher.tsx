@@ -84,7 +84,7 @@ export default function SpaceSwitcher({ className }: TeamSwitcherProps) {
             role="combobox"
             aria-expanded={open}
             aria-label="Select a team"
-            className={cn("w-[30%] justify-between", className)}
+            className={cn("sm:w-[30%] w-[70%] justify-between", className)}
           >
             <Avatar className="mr-2 h-5 w-5">
               <AvatarFallback>{selectedTeam?.name.slice(0, 1)}</AvatarFallback>

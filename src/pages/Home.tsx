@@ -8,15 +8,15 @@ export default function App() {
   const { selectedTeam } = useStudies();
 
   return (
-    <section className="container">
+    <section className="container sm:pr-8 sm:pl-8 pr-2 pl-2">
       {!selectedTeam?.plan && <Questions />}
 
       {selectedTeam?.plan && (
-        <div className="flex gap-2 mt-4">
-          <div className="w-6/12">
+        <div className="flex gap-2 mt-4 flex-wrap">
+          <div className="sm:w-6/12 w-full">
             <TasksList />
           </div>
-          <div className="w-6/12">
+          <div className="sm:w-6/12 w-full">
             <MessagesProvider>
               <ChatList />
             </MessagesProvider>

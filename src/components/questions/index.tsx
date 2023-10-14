@@ -20,8 +20,8 @@ function Questions() {
       toast({
         title: "Almost there!",
         description:
-          "System is generating questions based on your study. Please wait a moment! It usually takes up to 20 seconds.",
-        duration: 10000,
+          "System is generating questions based on your study. Please wait a moment! It usually takes up to 20-40 seconds.",
+        duration: 20000,
       });
       generateQuestions(selectedTeam.id, selectedTeam.name)
         .then(() => {
@@ -39,7 +39,7 @@ function Questions() {
       toast({
         title: "We are generating plan!",
         description:
-          "System is generating plan based on your answers. Please wait a moment! It usually takes up to 20-40 seconds.",
+          "System is generating plan based on your answers. Please wait a moment! It usually takes up to 40-70 seconds.",
         duration: 20000,
       });
       generateSections(selectedTeam.id, selectedTeam.name, data)
