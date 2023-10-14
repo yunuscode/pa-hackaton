@@ -14,6 +14,7 @@ type Study = {
   user_id: string;
   questions?: any;
   plan: any;
+  completed_items?: string[];
 };
 
 type StudiesContextType = {
@@ -23,6 +24,7 @@ type StudiesContextType = {
   selectedTeam?: Study;
   setSelectedTeam?: any;
   reloadSpaces?: any;
+  checkboxItem?: any;
 };
 
 const StudiesContext = React.createContext<StudiesContextType>({});
@@ -74,6 +76,25 @@ export default function StudiesProvider({ children }: { children: any }) {
     }
   };
 
+  const checkboxItem = async (id: string) => {
+    let completed_items = selectedTeam.completed_items || [];
+    completed_items.push(id);
+    const { error } = await supabase
+      .from("studies")
+      .update({ completed_items })
+      .eq("id", selectedTeam.id);
+
+    if (error) {
+      return;
+    }
+
+    let stds = [...studies];
+    let index = stds.findIndex((i) => i.id == selectedTeam.id);
+    stds[index] = { ...stds[index], completed_items };
+
+    setStudies(stds);
+  };
+
   return (
     <StudiesContext.Provider
       value={{
@@ -83,6 +104,7 @@ export default function StudiesProvider({ children }: { children: any }) {
         selectedTeam,
         setSelectedTeam,
         reloadSpaces,
+        checkboxItem,
       }}
     >
       {children}
