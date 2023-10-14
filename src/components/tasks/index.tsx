@@ -1,16 +1,20 @@
+import { useStudies } from "../providers/space-provider";
 import Heading from "../ui/heading";
 import TableData from "./table";
-import TasksTable, { Subtask } from "./table";
-
-const topics = [];
 
 export default function TasksList() {
+  const { selectedTeam } = useStudies();
+
   return (
-    <div className="tasks border p-3 mt-4 rounded">
+    <div className="tasks border p-3 rounded">
       <Heading>Tasks board</Heading>
-      <div className="mt-4">
-        <TableData />
-      </div>
+      {selectedTeam?.plan?.sections?.map((item, index) => {
+        return (
+          <div key={index} className="mt-4">
+            <TableData data={item} />
+          </div>
+        );
+      })}
     </div>
   );
 }

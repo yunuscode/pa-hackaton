@@ -13,6 +13,7 @@ type Study = {
   name: string;
   user_id: string;
   questions?: any;
+  plan: any;
 };
 
 type StudiesContextType = {

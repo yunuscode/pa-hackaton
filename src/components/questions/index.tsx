@@ -4,7 +4,7 @@ import { Button } from "../ui/button";
 import Heading from "../ui/heading";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
-import { generateQuestions } from "@/lib/axios";
+import { generateQuestions, generateSections } from "@/lib/axios";
 import { Skeleton } from "../ui/skeleton";
 import { useToast } from "@/components/ui/use-toast";
 
@@ -12,6 +12,7 @@ function Questions() {
   const { studies, loading, selectedTeam, reloadSpaces } = useStudies();
   const [loadingQuestions, setLoadingQuestions] = useState<boolean>(false);
   const { toast } = useToast();
+  const [data, setData] = useState<any[]>([]);
 
   useEffect(() => {
     if (selectedTeam?.id && !selectedTeam.questions && !loadingQuestions) {
@@ -32,7 +33,38 @@ function Questions() {
     }
   }, [selectedTeam]);
 
-  if (loadingQuestions) {
+  const handleGeneratePlan = async () => {
+    if (selectedTeam?.id && data.length && !loadingQuestions) {
+      setLoadingQuestions(true);
+      toast({
+        title: "We are generating plan!",
+        description:
+          "System is generating plan based on your answers. Please wait a moment! It usually takes up to 20-40 seconds.",
+        duration: 20000,
+      });
+      generateSections(selectedTeam.id, selectedTeam.name, data)
+        .then(() => {
+          reloadSpaces();
+        })
+        .finally(() => {
+          setLoadingQuestions(false);
+        });
+    }
+  };
+
+  if (loadingQuestions && !selectedTeam?.questions) {
+    return (
+      <div className="border p-3 mt-4 rounded">
+        {new Array(3).fill(1).map((_, index) => {
+          return (
+            <Skeleton key={index} className="w-full h-[50px] rounded my-2" />
+          );
+        })}
+      </div>
+    );
+  }
+
+  if (loadingQuestions && !selectedTeam?.plan) {
     return (
       <div className="border p-3 mt-4 rounded">
         {new Array(3).fill(1).map((_, index) => {
@@ -57,12 +89,39 @@ function Questions() {
           return (
             <div key={index} className="space-y-2 mb-2">
               <Label htmlFor="name">{item.label}</Label>
-              <Input id="name" />
+              <Input
+                id="name"
+                placeholder={item.description}
+                onChange={(e) => {
+                  let answer = {
+                    id: item.id,
+                    value: e.target.value,
+                  };
+                  const index = data.findIndex((i) => i.id == item.id);
+
+                  if (index == -1) {
+                    setData([...data, answer]);
+                    return;
+                  }
+
+                  let res = [...data];
+
+                  res[index] = answer;
+
+                  setData(res);
+                }}
+              />
             </div>
           );
         })}
 
-      <Button className="mt-3">Submit answers</Button>
+      <Button
+        disabled={!data.length}
+        onClick={() => handleGeneratePlan()}
+        className="mt-3"
+      >
+        Submit answers
+      </Button>
     </div>
   );
 }

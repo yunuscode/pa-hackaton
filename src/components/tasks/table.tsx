@@ -42,25 +42,30 @@ export const Subtask = ({ level, title, opened, onClick }) => {
   );
 };
 
-export default function TableData() {
-  const [isOpen, setIsOpen] = useState(false);
+export default function TableData({ data }) {
+  const [isOpen, setIsOpen] = useState(true);
 
   return (
     <div>
       <Subtask
         level={0}
-        title="Task 1"
+        title={data?.title}
         opened={isOpen}
         onClick={() => setIsOpen(!isOpen)}
       />
       {isOpen && (
         <>
-          <Subtask
-            level={1}
-            title="Task 1"
-            opened={isOpen}
-            onClick={() => {}}
-          />
+          {data?.subsections?.map((i, index) => {
+            return (
+              <Subtask
+                key={index}
+                level={1}
+                title={i?.title}
+                opened={isOpen}
+                onClick={() => {}}
+              />
+            );
+          })}
         </>
       )}
     </div>

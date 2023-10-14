@@ -14,3 +14,17 @@ export async function generateQuestions(id: string, title: string) {
 
   return response;
 }
+
+export async function generateSections(
+  id: string,
+  title: string,
+  answers: any[]
+) {
+  let response = await request("api/plans/generate", {
+    planId: id,
+    planName: title,
+    answers,
+  });
+
+  return response;
+}
