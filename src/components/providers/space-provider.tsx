@@ -4,7 +4,7 @@ import { useUser } from "./auth-provider";
 
 export type Question = {
   label: string;
-  description: string;
+  description: any;
   id: string;
 };
 
@@ -49,7 +49,14 @@ export default function StudiesProvider({ children }: { children: any }) {
       if (spaces.length) {
         setStudies(spaces);
         if (!selectedTeam) {
-          setSelectedTeam(spaces[0]);
+          const index = spaces.findIndex(
+            (i) => i.id == window.localStorage.getItem("studyId")
+          );
+          if (index > -1) {
+            setSelectedTeam(spaces[index]);
+          } else {
+            setSelectedTeam(spaces[0]);
+          }
         }
       }
     }

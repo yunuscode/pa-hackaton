@@ -2,17 +2,6 @@ import { Checkbox } from "@/components/ui/checkbox";
 import React, { useState } from "react";
 import { ChevronDown } from "lucide-react";
 
-const data = [
-  {
-    id: "728ed52f",
-    text: "Complete first step",
-  },
-  {
-    id: "728ed52f",
-    text: "Complete second step",
-  },
-];
-
 // Accordion.js
 
 export const Subtask = ({ level, title, opened, onClick }) => {
@@ -20,7 +9,7 @@ export const Subtask = ({ level, title, opened, onClick }) => {
     <div
       className={`${level == 0 ? "border" : "border border-t-0"} ${
         level == 0 ? "w-full" : "w-[96%]"
-      } p-2 rounded flex items-center w-full ml-auto`}
+      } p-2 rounded flex items-center ml-auto`}
     >
       <div className="accordion-wrapper w-full overflow-hidden">
         <div className="flex items-center transition-all [&[data-state=open]>svg]:rotate-180">
@@ -55,7 +44,7 @@ export default function TableData({ data }) {
       />
       {isOpen && (
         <>
-          {data?.subsections?.map((i, index) => {
+          {data?.sub_sections?.map((i, index) => {
             return (
               <Subtask
                 key={index}

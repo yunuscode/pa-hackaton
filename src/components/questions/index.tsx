@@ -91,7 +91,11 @@ function Questions() {
               <Label htmlFor="name">{item.label}</Label>
               <Input
                 id="name"
-                placeholder={item.description}
+                placeholder={
+                  typeof item.description == "string"
+                    ? item.description
+                    : item.description?.description
+                }
                 onChange={(e) => {
                   let answer = {
                     id: item.id,

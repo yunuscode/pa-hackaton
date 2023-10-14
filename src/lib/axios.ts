@@ -28,3 +28,16 @@ export async function generateSections(
 
   return response;
 }
+
+export async function getResponseFromChat(
+  id: string,
+  title: string,
+  message: string
+) {
+  let response = await request(`api/study/${id}/messages`, {
+    planName: title,
+    question: message,
+  });
+
+  return response;
+}
