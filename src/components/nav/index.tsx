@@ -1,4 +1,4 @@
-import SpaceSwitcher from "./spaceSwitcher";
+import SpaceSwitcher from "./space-switcher";
 import UserNav from "./user-nav";
 
 export default function Nav() {

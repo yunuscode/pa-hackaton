@@ -6,9 +6,11 @@ export default function RouterComponent() {
   return (
     <Router>
       <Nav />
-      <Routes>
-        <Route path="/" Component={Home} />
-      </Routes>
+      <div className="px-4 pt-2 mt-2">
+        <Routes>
+          <Route path="/" Component={Home} />
+        </Routes>
+      </div>
     </Router>
   );
 }

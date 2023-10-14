@@ -36,12 +36,6 @@ import { Loader2 } from "lucide-react";
 import { useUser } from "../providers/auth-provider";
 import { useStudies } from "../providers/space-provider";
 
-type Study = {
-  id: string;
-  name: string;
-  user_id: string;
-};
-
 type PopoverTriggerProps = React.ComponentPropsWithoutRef<
   typeof PopoverTrigger
 >;
@@ -49,18 +43,14 @@ type PopoverTriggerProps = React.ComponentPropsWithoutRef<
 interface TeamSwitcherProps extends PopoverTriggerProps {}
 
 export default function SpaceSwitcher({ className }: TeamSwitcherProps) {
-  const { studies, setStudies, loading } = useStudies();
+  const { studies, setStudies, loading, selectedTeam, setSelectedTeam } =
+    useStudies();
   const [open, setOpen] = React.useState(false);
   const [showNewTeamDialog, setShowNewTeamDialog] = React.useState(false);
-  const [selectedTeam, setSelectedTeam] = React.useState<Study>();
   const [name, setName] = React.useState<string>("");
   const { user } = useUser();
 
   React.useEffect(() => {
-    if (!selectedTeam && !!studies?.length) {
-      setSelectedTeam(studies[0]);
-    }
-    console.log(studies, loading);
     if (!studies?.length && !loading) {
       setShowNewTeamDialog(true);
     }
@@ -79,6 +69,7 @@ export default function SpaceSwitcher({ className }: TeamSwitcherProps) {
     if (data.length) {
       if (Array.isArray(studies)) {
         setStudies([...studies, ...data]);
+        setSelectedTeam(data[0]);
       }
       setShowNewTeamDialog(false);
     }
@@ -93,7 +84,7 @@ export default function SpaceSwitcher({ className }: TeamSwitcherProps) {
             role="combobox"
             aria-expanded={open}
             aria-label="Select a team"
-            className={cn("w-[250px] justify-between", className)}
+            className={cn("w-[30%] justify-between", className)}
           >
             <Avatar className="mr-2 h-5 w-5">
               <AvatarFallback>{selectedTeam?.name.slice(0, 1)}</AvatarFallback>
