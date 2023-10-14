@@ -78,7 +78,12 @@ export default function StudiesProvider({ children }: { children: any }) {
 
   const checkboxItem = async (id: string) => {
     let completed_items = selectedTeam.completed_items || [];
-    completed_items.push(id);
+    let ind = completed_items.findIndex((i) => i == id);
+    if (ind > -1) {
+      completed_items.splice(ind, 1);
+    } else {
+      completed_items.push(id);
+    }
     const { error } = await supabase
       .from("studies")
       .update({ completed_items })
