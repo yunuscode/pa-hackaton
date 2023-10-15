@@ -85,39 +85,47 @@ function Questions() {
           ...(Array.isArray(selectedTeam?.questions)
             ? selectedTeam?.questions
             : selectedTeam?.questions?.questions),
-        ]?.map((item: Question, index: number) => {
-          return (
-            <div key={index} className="space-y-2 mb-2">
-              <Label htmlFor="name">{item.label}</Label>
-              <Input
-                id="name"
-                placeholder={
-                  typeof item.description == "string"
-                    ? item.description
-                    : item.description?.description
-                }
-                onChange={(e) => {
-                  let answer = {
-                    id: item.id,
-                    value: e.target.value,
-                  };
-                  const index = data.findIndex((i) => i.id == item.id);
-
-                  if (index == -1) {
-                    setData([...data, answer]);
-                    return;
+        ]
+          ?.concat([
+            {
+              label: "Add your own data",
+              id: "want_to_prepare_for_this_jobs_value",
+              description: "Could be job post, job description. It is optional",
+            },
+          ])
+          .map((item: Question, index: number) => {
+            return (
+              <div key={index} className="space-y-2 mb-2">
+                <Label htmlFor="name">{item.label}</Label>
+                <Input
+                  id="name"
+                  placeholder={
+                    typeof item.description == "string"
+                      ? item.description
+                      : item.description?.description
                   }
+                  onChange={(e) => {
+                    let answer = {
+                      id: item.id,
+                      value: e.target.value,
+                    };
+                    const index = data.findIndex((i) => i.id == item.id);
 
-                  let res = [...data];
+                    if (index == -1) {
+                      setData([...data, answer]);
+                      return;
+                    }
 
-                  res[index] = answer;
+                    let res = [...data];
 
-                  setData(res);
-                }}
-              />
-            </div>
-          );
-        })}
+                    res[index] = answer;
+
+                    setData(res);
+                  }}
+                />
+              </div>
+            );
+          })}
 
       <Button
         disabled={!data.length}
