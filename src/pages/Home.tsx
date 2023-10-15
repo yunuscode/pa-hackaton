@@ -12,7 +12,7 @@ export default function App() {
       {!selectedTeam?.plan && <Questions />}
 
       {selectedTeam?.plan && (
-        <div className="flex gap-2 mt-4 flex-wrap">
+        <div className="flex gap-2 mt-4 sm:flex-nowrap flex-wrap">
           <div className="sm:w-6/12 w-full">
             <TasksList />
           </div>

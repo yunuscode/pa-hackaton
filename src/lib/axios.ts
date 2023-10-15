@@ -41,3 +41,11 @@ export async function getResponseFromChat(
 
   return response;
 }
+
+export async function getDescription(title: string) {
+  let response = await request(`api/description/generate`, {
+    planName: title,
+  });
+
+  return response;
+}
