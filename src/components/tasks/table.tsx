@@ -61,6 +61,10 @@ export const Subtask = ({ level, title, opened, onClick, id }) => {
               {title}
             </Checkbox>
             <SheetTrigger
+              disabled={
+                title == "Tap to add your content..." ||
+                title == "Tap to add your sub task..."
+              }
               onClick={(e) => {
                 handleLoadDescription();
               }}
