@@ -3,6 +3,7 @@ import MessagesProvider from "@/components/providers/message-provider";
 import { useStudies } from "@/components/providers/space-provider";
 import Questions from "@/components/questions";
 import TasksList from "@/components/tasks";
+import { Button } from "@/components/ui/button";
 
 export default function App() {
   const { selectedTeam } = useStudies();
@@ -17,6 +18,14 @@ export default function App() {
             <TasksList />
           </div>
           <div className="sm:w-6/12 w-full">
+            <div className="mb-3 flex gap-4 justify-between">
+              <Button className="flex-grow" disabled>
+                Complate and Take quiz
+              </Button>
+              <Button className="flex-grow" disabled>
+                Share plan with others
+              </Button>
+            </div>
             <MessagesProvider>
               <ChatList />
             </MessagesProvider>
